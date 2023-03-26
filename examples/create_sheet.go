@@ -6,7 +6,7 @@ import (
 	"github.com/xuri/excelize/v2"
 )
 
-func createSheet(filePath string) {
+func createSheet(filePath string) (*excelize.File, error) {
 	f := excelize.NewFile()
 	defer func() {
 		if err := f.Close(); err != nil {
@@ -18,12 +18,11 @@ func createSheet(filePath string) {
 	index, err := f.NewSheet("Sheet1")
 	if err != nil {
 		fmt.Println(err)
-		return
+		return nil, err
 	}
 
 	// セルの値を設定
 	f.SetCellValue("Sheet1", "A1", "Hello world.")
-	f.SetCellValue("Sheet2", "B1", 100)
 
 	// ワークブックのデフォルトワークシートを設定
 	f.SetActiveSheet(index)
@@ -32,4 +31,5 @@ func createSheet(filePath string) {
 	if err := f.SaveAs(filePath); err != nil {
 		fmt.Println(err)
 	}
+	return f, nil
 }
