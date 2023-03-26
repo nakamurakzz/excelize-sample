@@ -22,6 +22,15 @@ func TestMergeCell(t *testing.T) {
 		t.Error(err1)
 	}
 	if len(mergeCells) != 1 {
-		t.Error("セルがマージされていません")
+		t.Error("セルがマージされていない")
+	}
+
+	for _, mergeCell := range mergeCells {
+		if mergeCell.GetStartAxis() != "A1" {
+			t.Error()
+		}
+		if mergeCell.GetEndAxis() != "B1" {
+			t.Error()
+		}
 	}
 }
